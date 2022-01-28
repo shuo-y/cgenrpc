@@ -13,15 +13,19 @@ class FuncArgVisitor(c_ast.NodeVisitor):
         else:
             print("No args")
 
-def show_add_func(filename):
-    # Do we need to use_cpp? 
-    # based on https://github.com/eliben/pycparser/blob/master/examples/c-to-c.py
-    ast = parse_file(filename, use_cpp=True)
-
+def parse_arg(ast):
     #v = FuncDefVisitor()
     #v.visit(ast)
+    # Check the ast node
+    # See https://github.com/eliben/pycparser/blob/master/examples/func_defs.py
     v2 = FuncArgVisitor()
     v2.visit(ast)
+
+
+def show_add_func(filename):
+    # based on https://github.com/eliben/pycparser/blob/master/examples/c-to-c.py
+    # Do we need to use_cpp?
+    ast = parse_file(filename, use_cpp=True)
 
     new_func_ret_type = c_ast.TypeDecl(
         declname='new_invoke',
